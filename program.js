@@ -1,3 +1,4 @@
+
 // console.log("HELLO WORLD");
 // console.log(process.argv)
 
@@ -14,6 +15,18 @@ var fs = require("fs");
 // var ar  = s.split('\n') ;
 // console.log(ar.length -1) ;.
 
-fs.readFile(process.argv[2], 'utf8' , function callback(err, data){
-    console.log(data.split('\n').length-1)
-})
+// fs.readFile(process.argv[2], 'utf8' , function callback(err, data){
+//     console.log(data.split('\n').length-1)
+// })
+
+fs.readdir(process.argv[2], function callback(err, list) {
+  for (let i = 0; i < list.length; i++) {
+    // console.log(list[i]);
+    let a = list[i].split('.');
+    if(a.length > 1){
+        if(a[1] === process.argv[3]){
+            console.log(list[i])
+        }
+    }
+  }
+});
