@@ -9,7 +9,11 @@
 // console.log(sum)
 
 var fs = require("fs");
-var b = fs.readFileSync(process.argv[2])
-var s = b.toString()
-var ar  = s.split('\n') ;
-console.log(ar.length -1) ;
+// var b = fs.readFileSync(process.argv[2])
+// var s = b.toString()
+// var ar  = s.split('\n') ;
+// console.log(ar.length -1) ;.
+
+fs.readFile(process.argv[2], 'utf8' , function callback(err, data){
+    console.log(data.split('\n').length-1)
+})
