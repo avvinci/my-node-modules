@@ -18,11 +18,20 @@
 //     console.log(data.split('\n').length-1)
 // })
 
-var mymodule = require("./mymodule");
+// var mymodule = require("./mymodule");
 
-mymodule(process.argv[2], process.argv[3], function callback(err, data) {
-  if (err) console.log(err);
-  data.forEach(element => {
-    console.log(element);
-  });
-});
+// mymodule(process.argv[2], process.argv[3], function callback(err, data) {
+//   if (err) console.log(err);
+//   data.forEach(element => {
+//     console.log(element);
+//   });
+// });
+
+let http = require('http')
+http.get(process.argv[2], function callback(response){
+  response.on("data" , function (data){
+    // console.log(s[i])
+    let s  = data.toString() ; 
+    console.log(s);
+  })
+})
