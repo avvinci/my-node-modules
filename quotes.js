@@ -3,7 +3,7 @@ let site = "https://www.goodreads.com/quotes/widget/90010944-abhinav-vinci?v=2";
 let Normal_length = 6;
 let quoteCollection = new Set();
 let authorCollection = new Array();
-let TOTAL_TIME = 9000;
+let TOTAL_TIME = 6 * 60000 ;
 
 let writeToCSV = require("./writeQuote");
 
@@ -17,7 +17,7 @@ function parseData(data) {
   let removeSlashes = splits[1].split("\\").join("");
   let removeTrail = removeSlashes.split("&");
   let quote = removeTrail[0];
-  console.log(quote);
+//   console.log(quote);
   if (quoteCollection.has(quote)) {
     return;
   }
