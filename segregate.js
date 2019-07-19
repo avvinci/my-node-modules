@@ -1,7 +1,7 @@
 var fs = require("fs");
-var dir = "./tmp";
 const DIR_TO_READ = "./demo";
-
+const DEFAULT_DIR_NAME = "MY_DIR_";
+const DIR_PATH = "./demo/";
 let extensionsArray = [".txt", ".jpg", ".pdf", ".doc"];
 let dirArray = [
   "./demo/autoDir_txt",
@@ -38,15 +38,29 @@ function move(oldPath, newPath, callback) {
   }
 }
 
+function getDirForElement(element) {
+  let index = element.lastIndexOf(".");
+  if(index === -1) return element ; 
+  let extension = element.substring(index + 1);
+  console.log(extension);
+  let dir = DEFAULT_DIR_NAME + extension;
+  return dir;
+}
+
 function makeDir(element) {
-  for (let i = 0; i < extensionsArray.length; i++) {
-    if (element.includes(extensionsArray[i])) {
-      console.log(element + " is of type" + extensionsArray[i]);
-      if (!fs.existsSync(dirArray[i])) {
-        fs.mkdirSync(dirArray[i]);
-      }
-    }
+  let dir = getDirForElement(element);
+  let dirPath = DIR_PATH + dir; 
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath);
   }
+  // for (let i = 0; i < extensionsArray.length; i++) {
+  //   if (element.includes(extensionsArray[i])) {
+  //     console.log(element + " is of type" + extensionsArray[i]);
+  //     if (!fs.existsSync(dirArray[i])) {
+  //       fs.mkdirSync(dirArray[i]);
+  //     }
+  //   }
+  // }
 }
 
 function moveFile(element) {
@@ -68,7 +82,7 @@ fs.readdir(DIR_TO_READ, (err, files) => {
   files.forEach(element => {
     console.log(element);
     makeDir(element);
-    moveFile(element);
+    // moveFile(element);
   });
 });
 // if (!fs.existsSync(dir)){
