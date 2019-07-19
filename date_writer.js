@@ -1,30 +1,42 @@
 var fs = require("fs");
-var stream = fs.createWriteStream("my_file.txt");
-const writer = stream;
-for (let i = 0; i < 30; i++) {
-  let date = new Date(2019, 06, 19 + i);
-  date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  writer.write(
-    `${date.getDate()} ${date.getMonthName()} ${date.getFullYear()}\n`
-  );
-}
-writer.end("This is the end\n");
-writer.on("finish", () => {
-  console.log("All writes are now complete.");
-});
 
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-};
+function writeDates() {
+  var stream = fs.createWriteStream("my_file.txt");
+  const writer = stream;
 
-function getDates(startDate, stopDate) {
-  var dateArray = new Array();
-  var currentDate = startDate;
-  while (currentDate <= stopDate) {
-    dateArray.push(new Date(currentDate));
-    currentDate = currentDate.addDays(1);
+  for (let i = 0; i < 60; i++) {
+    let date = new Date(2019, 06, 19 + i);
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const month = date.toLocaleString("default", { month: "long" });
+    writer.write(`${date.getDate()} ${month} ${date.getFullYear()} \n`);
   }
-  return dateArray;
+
+  writer.end("This is the end\n");
+  writer.on("finish", () => {
+    console.log("All writes are now complete.");
+  });
 }
+
+function writeFiveGreatThings() {
+  var stream = fs.createWriteStream("my_file.txt");
+  const writer = stream;
+
+  for (let i = 0; i < 60; i++) {
+    let date = new Date(2019, 06, 19 + i);
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const month = date.toLocaleString("default", { month: "long" });
+    writer.write(`${date.getDate()} ${month} ${date.getFullYear()} \n`);
+    for (let j = 1; j <= 5; j++) {
+      writer.write(`${j}. \n`);
+    }
+    writer.write(` ... \n \n`);
+  }
+
+  writer.end("This is the end\n");
+  writer.on("finish", () => {
+    console.log("All writes are now complete.");
+  });
+}
+
+writeFiveGreatThings();
+// writeDates();
