@@ -1,42 +1,51 @@
 var fs = require("fs");
+var stream = fs.createWriteStream("my_file.txt");
+const writer = stream;
+
+const noOfColumns = 8;
+const numOfDays = 60;
+const numOfThings = 5;
+const startDate = new Date(2019, 06, 20);
+
+function getCurrentDate(i) {
+  return new Date(
+    startDate.getFullYear(),
+    startDate.getMonth(),
+    startDate.getDate() + i
+  );
+}
+
 
 function writeDates() {
-  var stream = fs.createWriteStream("my_file.txt");
-  const writer = stream;
-
-  for (let i = 0; i < 60; i++) {
-    let date = new Date(2019, 06, 19 + i);
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  for (let i = 0; i < numOfDays; i++) {
+    let date = getCurrentDate(i);
     const month = date.toLocaleString("default", { month: "long" });
-    writer.write(`${date.getDate()} ${month} ${date.getFullYear()} \n`);
+    writer.write(`${date.getDate()} ${month} ${date.getFullYear()}`);
+    for (let j = 0; j < noOfColumns; j++) {
+      writer.write("; 0");
+    }
+    writer.write("\n");
   }
-
-  writer.end("This is the end\n");
-  writer.on("finish", () => {
-    console.log("All writes are now complete.");
-  });
 }
 
 function writeFiveGreatThings() {
-  var stream = fs.createWriteStream("my_file.txt");
-  const writer = stream;
-
-  for (let i = 0; i < 60; i++) {
-    let date = new Date(2019, 06, 19 + i);
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  for (let i = 0; i < numOfDays; i++) {
+    let date = getCurrentDate(i);
     const month = date.toLocaleString("default", { month: "long" });
+
     writer.write(`${date.getDate()} ${month} ${date.getFullYear()} \n`);
-    for (let j = 1; j <= 5; j++) {
+    for (let j = 0; j < numOfThings; j++) {
       writer.write(`${j}. \n`);
     }
     writer.write(` ... \n \n`);
   }
-
-  writer.end("This is the end\n");
-  writer.on("finish", () => {
-    console.log("All writes are now complete.");
-  });
 }
 
-writeFiveGreatThings();
 // writeDates();
+writeFiveGreatThings();
+
+writer.end("\nThis is the end\n");
+writer.on("finish", () => {
+  console.log("All writes are now complete.");
+});
+
